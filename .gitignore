@@ -2,7 +2,7 @@
 [Bb]in/
 [Oo]bj/
 
-
+# ignore config files
 /conf/map_darkstar.conf
 /conf/login_darkstar.conf
 /conf/lan_config.conf
