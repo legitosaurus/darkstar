@@ -144,6 +144,15 @@ src/common/stamp-h1
 # Misc, such as vim swap files
 *.sw?
 
+
 navmeshes/*.nav
 
-conf/
+
+conf/map_darkstar.conf
+conf/login_darkstar.conf
+conf/lan_config.conf
+conf/packet_darkstar_tcp.conf
+conf/packet_darkstar_udp.conf
+conf/search_server.conf
+conf/server_message.conf
+conf/server_message_fr.conf
