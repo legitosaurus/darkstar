@@ -145,6 +145,7 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     m_useNavMesh = false;
     m_navMesh = nullptr;
     m_zoneEntities = new CZoneEntities(this);
+	m_eventType = EVENTTYPE_NONE;
 
     // settings should load first
     LoadZoneSettings();
@@ -174,7 +175,10 @@ ZONETYPE CZone::GetType()
 {
   return m_zoneType;
 }
-
+EVENTTYPE CZone::GetEventType()
+{
+	return m_eventType;
+}
 REGIONTYPE CZone::GetRegionID()
 {
     return m_regionID;
@@ -345,7 +349,8 @@ void CZone::LoadZoneSettings()
           "zone.misc,"
           "zone.navmesh,"
           "zone.zonetype,"
-          "bcnm.name "
+          "bcnm.name,"
+		  "zone.eventtype "
         "FROM zone_settings AS zone "
         "LEFT JOIN bcnm_info AS bcnm "
         "USING (zoneid) "
@@ -361,15 +366,23 @@ void CZone::LoadZoneSettings()
         m_zoneIP   = inet_addr(Sql_GetData(SqlHandle,1));
         m_zonePort = (uint16)Sql_GetUIntData(SqlHandle,2);
         m_zoneMusic.m_songDay = (uint8)Sql_GetUIntData(SqlHandle, 3);   // background music (day)
-        m_zoneMusic.m_songNight = (uint8)Sql_GetUIntData(SqlHandle, 4);   // background music (night)
+		m_zoneMusic.m_songNight = (uint8)Sql_GetUIntData(SqlHandle, 4);   // background music (night)
         m_zoneMusic.m_bSongS = (uint8)Sql_GetUIntData(SqlHandle,5);   // solo battle music
         m_zoneMusic.m_bSongM = (uint8)Sql_GetUIntData(SqlHandle,6);   // party battle music
         m_tax = (uint16)(Sql_GetFloatData(SqlHandle,7) * 100);      // tax for bazaar
         m_miscMask = (uint16)Sql_GetUIntData(SqlHandle,8);
         m_useNavMesh = (bool)Sql_GetIntData(SqlHandle,9);
-
-        m_zoneType = (ZONETYPE)Sql_GetUIntData(SqlHandle, 10);
-
+		m_eventType = (EVENTTYPE)Sql_GetUIntData(SqlHandle, 12);
+		if (luautils::IsSummerfestYearRound())
+		{
+			if ((EVENTTYPE)Sql_GetUIntData(SqlHandle, 12) >= 3)
+			{
+				m_zoneMusic.m_songNight = 227;   // background music (night)
+			}
+		}
+		m_zoneType = (ZONETYPE)Sql_GetUIntData(SqlHandle, 10);
+		
+		//luautils::OnZoneWeatherChange(GetID(), Weather);
         if (Sql_GetData(SqlHandle,11) != nullptr) // сейчас нельзя использовать bcnmid, т.к. они начинаются с нуля
         {
             m_BattlefieldHandler = new CBattlefieldHandler(m_zoneID);

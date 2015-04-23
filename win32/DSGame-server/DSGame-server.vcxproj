@@ -82,6 +82,9 @@
     <OutDir>..\..\</OutDir>
     <TargetName>$(ProjectName)_64</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)_debug</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -98,7 +101,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>libmariadb.lib;lua51.lib;libzmq-d.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName)_debug$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>

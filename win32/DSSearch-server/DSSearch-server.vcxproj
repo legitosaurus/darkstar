@@ -120,6 +120,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Configuration)\</IntDir>
     <OutDir>..\..\</OutDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -147,7 +148,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libmariadb.lib;WS2_32.Lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\lib</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName)_debug$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

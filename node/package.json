@@ -1,0 +1,14 @@
+{
+  "name": "xinode",
+  "version": "0.0.1",
+  "description": "dsp-node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Foodz",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "~0.4.31"
+  }
+}

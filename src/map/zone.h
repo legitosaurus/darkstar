@@ -469,9 +469,26 @@ struct zoneWeather_t
 
 struct zoneLine_t
 {
-    uint32     m_zoneLineID;
-    uint16     m_toZone;
-    position_t m_toPos;
+	uint32     m_zoneLineID;
+	uint16     m_toZone;
+	position_t m_toPos;
+};
+
+/************************************************************************
+*                                                                       *
+*            Zone Event Type                                            *
+*                       -foodz                                          *
+************************************************************************/
+
+
+enum EVENTTYPE
+{
+	EVENTTYPE_NONE = 0,
+	EVENTTYPE_BATTLEFIELD = 1,
+	EVENTTYPE_DUNGEON = 2,
+	EVENTTYPE_OUTDOORS = 3,
+	EVENTTYPE_CITY = 4,
+	EVENTTYPE_JEUNO = 5
 };
 
 /************************************************************************
@@ -515,7 +532,7 @@ public:
     uint8           GetBackgroundMusicDay();
     uint8 GetBackgroundMusicNight();
     zoneLine_t*     GetZoneLine(uint32 zoneLineID);
-
+	EVENTTYPE		GetEventType();
     virtual CCharEntity*    GetCharByName(int8* name);                              // finds the player if exists in zone
     virtual CCharEntity*    GetCharByID(uint32 id);
     virtual CBaseEntity*    GetEntity(uint16 targid, uint8 filter = -1);            // получаем указатель на любую сущность в зоне
@@ -588,7 +605,7 @@ private:
     uint16          m_miscMask;             // битовое поле, описывающее возможности использования в зоне определенных умений
 
     zoneMusic_t     m_zoneMusic;            // информация о мелодиях, используемых в зоне
-
+	EVENTTYPE		m_eventType;
     regionList_t    m_regionList;           // список активных областей зоны
     zoneLineList_t  m_zoneLineList;         // список всех доступных zonelines для зоны
 

@@ -405,7 +405,7 @@ int32 login_config_default()
 	login_config.usLoginAuthPort = 54231;
 
     login_config.expansions = 0xFFFF;
-    login_config.servername = "DarkStar";
+    login_config.servername = "Brainforest";
 
 	login_config.mysql_host     = "";
 	login_config.mysql_login    = "";
@@ -428,9 +428,9 @@ int32 version_info_default()
 
 void login_versionscreen(int32 flag)
 {
-	ShowInfo(CL_WHITE "Darkstar version %d.%02d.%02d" CL_RESET"\n",
+	ShowInfo(CL_WHITE "Brainforest version %d.%02d.%02d" CL_RESET"\n",
 		DARKSTAR_MAJOR_VERSION, DARKSTAR_MINOR_VERSION, DARKSTAR_REVISION);
-	ShowInfo(CL_GREEN "Website/Forum:" CL_RESET "\thttp://darkstarproject.ru/\n");
+	ShowInfo(CL_GREEN "Website:" CL_RESET "\thttp://Brainfore.st/\n");
 	ShowInfo("\nOpen " CL_WHITE "readme.html" CL_RESET " for more information.");
 	if (flag) exit(EXIT_FAILURE);
 }

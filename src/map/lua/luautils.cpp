@@ -73,6 +73,8 @@ namespace luautils
 lua_State*  LuaHandle = nullptr;
 
 bool expansionRestrictionEnabled;
+bool SummerfestEnabled;
+bool SummerfestYearRound;
 std::unordered_map<std::string, bool> expansionEnabledMap;
 
 /************************************************************************
@@ -149,8 +151,11 @@ int32 init()
     luaL_dostring(LuaHandle, "if not bit then bit = require('bit') end");
 
 	expansionRestrictionEnabled = (GetSettingsVariable("RESTRICT_BY_EXPANSION") != 0);
-
+	SummerfestYearRound = (GetSettingsVariable("SUMMERFEST_YEAR_ROUND") != 0);
+	//SummerfestEnabled = (GetSettingsVariable("SUMMERFEST_2004") != 0);
 	ShowMessage("\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
+	/*ShowDebug(CL_GREEN"[SummerfestEnabled] "CL_RESET" \t\t\t\t - "CL_GREEN"[%d]\n" CL_RESET, SummerfestEnabled);*/
+	/*ShowDebug(CL_GREEN"[SummerfestYearRound] "CL_RESET" \t\t\t - "CL_GREEN"[%d]\n" CL_RESET, SummerfestYearRound);*/
 	return 0;
 }
 
@@ -1058,6 +1063,17 @@ bool IsExpansionEnabled(const char* expansionCode)
 	}
 
 	return true;
+}
+
+/************************************************************************
+*                                                                       *
+*  Check if Summerfest year round Is Enabled In Settings.lua            *
+*                                                                       *
+************************************************************************/
+
+bool IsSummerfestYearRound()
+{
+	return SummerfestYearRound;
 }
 
 /************************************************************************
