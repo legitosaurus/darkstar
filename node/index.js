@@ -1,37 +1,43 @@
-/*
-  Prerequisites:
+"use strict";
+var zmq = require('zmq'),
+    config = require('../conf/node_conf');
 
-    1. Install node.js and npm
-    2. npm install ws
+console.dir(config);
+//router = server
+var $r = zmq.socket('router');
+    $r.port = 'tcp://'+config.node.ip+':'+config.node.nodePort;
+    $r.identity = 'nodeServer'; // + process.pid;
 
-  See also,
+$r.bind($r.port, function(err) {
+    if (err) throw err;
+    console.log('Listening on: '+$r.port);
 
-    http://einaros.github.com/ws/
+    // setInterval(function() {
+    //   var value = Math.floor(Math.random()*100);
 
-  To run,
+    //   console.log($r.identity + ': asking ' + value);
+    //   $r.send(value);
+    // }, 100);
 
-    node example-server.js
-*/
 
-"use strict"; // http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
-var WebSocketServer = require('ws').Server;
-var http = require('http');
-
-var server = http.createServer();
-var wss = new WebSocketServer({server: server, path: '/map'});
-wss.on('connection', function(ws) {
-    console.log('/map connected');
-    ws.on('message', function(data, flags) {
-        if (flags.binary) { return; }
-        console.log('>>> ' + data);
-        if (data == 'goodbye') { console.log('<<< galaxy'); ws.send('galaxy'); }
-        if (data == 'hello') { console.log('<<< world'); ws.send('world'); }
-    });
-    ws.on('close', function() {
-      console.log('Connection closed!');
-    });
-    ws.on('error', function(e) {
+    $r.on('message', function(envelope, data) {
+    	var recvData = JSON.parse(data.toString());
+    	console.dir(recvData);
+      //console.log($r.identity + ': received ' + envelope + ' - ' + data.toString());
     });
 });
-server.listen(8126);
-console.log('Listening on port 8126...');
+
+// //dealer = client
+// var $d = zmq.socket('dealer');
+// $d.identity = 'client' + process.pid;
+// $d.connect('tcp://'+config.node.ip+':'+config.node.nodePort);
+// console.log('connected!');
+// setInterval(function() {
+// //var value = Math.floor(Math.random()*100
+//  var value = Math.floor(Math.random()*100);
+// $d.send(value);
+// console.log($d.identity + ': asking ' + value);
+// }, 100);
+// $d.on('message', function(data) {
+// console.log($d.identity + ': received ' + data.toString());
+// });

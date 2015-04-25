@@ -1,0 +1,73 @@
+
+Memory manager: Memory leaks found at 2015/04/21 11h47m26s.
+0001 : ..\..\src\map\map.cpp line 1189 size 12 address 0x02B3D064
+0002 : ..\..\src\map\map.cpp line 1261 size 10 address 0x02B3D0A4
+0003 : ..\..\src\common\strlib.cpp line 1004 size 1025 address 0x02F2FDDC
+0004 : ..\..\src\common\sql.cpp line 75 size 1008 address 0x02F39DD4
+0005 : ..\..\src\map\map.cpp line 1193 size 21 address 0x02F439EC
+
+Memory manager: Memory leaks found at 2015/04/21 14h44m02s.
+0001 : c:\xiserver\darkstar\src\map\map.cpp line 1189 size 12 address 0x034DF084
+0002 : c:\xiserver\darkstar\src\map\map.cpp line 1261 size 10 address 0x034DF0C4
+0003 : c:\xiserver\darkstar\src\map\map.cpp line 123 size 1770 address 0x038BE7AC
+0004 : c:\xiserver\darkstar\src\common\strlib.cpp line 1004 size 1025 address 0x038D1DFC
+0005 : c:\xiserver\darkstar\src\common\sql.cpp line 75 size 1008 address 0x038DBDF4
+0006 : c:\xiserver\darkstar\src\map\map.cpp line 1193 size 21 address 0x038E5A0C
+
+Memory manager: Memory leaks found at 2015/04/23 14h48m14s.
+0001 : c:\xiserver\darkstar\src\map\map.cpp line 1190 size 12 address 0x02EC1084
+0002 : c:\xiserver\darkstar\src\map\map.cpp line 1262 size 10 address 0x02EC10C4
+0003 : c:\xiserver\darkstar\src\map\map.cpp line 242 size 1770 address 0x0329F9AC
+0004 : c:\xiserver\darkstar\src\common\strlib.cpp line 1004 size 1025 address 0x032B3DFC
+0005 : c:\xiserver\darkstar\src\common\sql.cpp line 75 size 1008 address 0x032BDDF4
+0006 : c:\xiserver\darkstar\src\map\map.cpp line 1194 size 21 address 0x032C7A0C
+
+Memory manager: Memory leaks found at 2015/04/24 13h05m27s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x02F2DA3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x02F2DA5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x02F2DA7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h09m19s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x02D10A3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x02D10A5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x02D10A7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h11m06s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x02E9BA3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x02E9BA5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x02E9BA7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h11m59s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x0270EA3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x0270EA5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x0270EA7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h53m34s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x02F42A3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x02F42A5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x02F42A7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h54m34s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x03191A3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x03191A5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x03191A7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h56m48s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x02FCAA3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x02FCAA5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x02FCAA7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h57m13s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x02706A3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x02706A5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x02706A7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h58m05s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x02F24A3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x02F24A5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x02F24A7C
+
+Memory manager: Memory leaks found at 2015/04/24 13h58m25s.
+0001 : c:\xiserver\darkstar\src\login\login.cpp line 338 size 12 address 0x0270DA3C
+0002 : c:\xiserver\darkstar\src\login\login.cpp line 350 size 10 address 0x0270DA5C
+0003 : c:\xiserver\darkstar\src\login\login.cpp line 391 size 11 address 0x0270DA7C

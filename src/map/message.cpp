@@ -426,7 +426,8 @@ namespace message
             }
         }
         ipp |= (port << 32);
-
+		ShowWarning("message::init chatIp: %d\n", chatIp);
+		ShowWarning("message::init chatPort: %d\n", chatPort);
         zSocket->setsockopt(ZMQ_IDENTITY, &ipp, sizeof ipp);
 
         uint32 to = 500;

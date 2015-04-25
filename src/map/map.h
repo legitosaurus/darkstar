@@ -122,6 +122,10 @@ struct map_config_t
 	bool   audit_party;
 	uint16 msg_server_port;			// central message server port
 	const char* msg_server_ip;		// central message server IP
+	uint16 node_server_port;		// node server port
+	const char* node_server_ip;		// node server IP
+	uint16 node_app_port;		// node app port
+	const char* node_app_ip;		// node app IP
 };
 
 /************************************************************************
@@ -166,6 +170,9 @@ extern map_session_list_t map_session_list;
 
 extern in_addr map_ip;
 extern uint16 map_port;
+
+extern in_addr node_ip;
+extern uint16 node_port;
 
 extern inline map_session_data_t* mapsession_getbyipp(uint64 ipp);
 extern inline map_session_data_t* mapsession_createsession(uint32 ip,uint16 port);

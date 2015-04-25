@@ -30,6 +30,9 @@ This file is part of DarkStar-server source code.
 #include "../common/taskmgr.h"
 #include "../common/timer.h"
 #include "../common/utils.h"
+#include "../common/rapidjson/writer.h"
+#include "../common/rapidjson/stringbuffer.h"
+#include "web.h"
 
 #include <string.h>
 #include "alliance.h"
@@ -56,6 +59,7 @@ This file is part of DarkStar-server source code.
 #include "zone.h"
 #include "utils/zoneutils.h"
 #include "message.h"
+#include "web.h"
 
 #include "items/item_shop.h"
 
@@ -3528,6 +3532,20 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         }
         else
         {
+			//ShowWarning("packet_system::SmallPacket0x0B5 Packet RCVD: %d\n", data);
+			//ShowWarning("packet_system::SmallPacket0x0B5 Test: %d\n", RBUFB(data, (0x04)));
+			ShowWarning("chat_system::%s said: %s\n", PChar->GetName(), data[6]);
+			rapidjson::StringBuffer s;
+			rapidjson::Writer<rapidjson::StringBuffer> writer(s);
+			writer.StartObject();
+			writer.String("type");
+			writer.String("chat");
+			writer.String("payload");
+			writer.StartArray();
+			writer.String("char");
+			writer.String(PChar->GetName());
+			writer.String("body");
+			writer.String(data[6]);
             switch (RBUFB(data, (0x04)))
             {
             case MESSAGE_SAY:
@@ -3569,7 +3587,11 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     WBUFL(packetData, 0) = PChar->PLinkshell1->getID();
                     WBUFL(packetData, 4) = PChar->id;
                     message::send(MSG_CHAT_LINKSHELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, data[6]));
-
+					writer.String("type");
+					writer.String("linkshell");
+					writer.EndArray();
+					writer.EndObject();
+					web::sendJSON(s);
                     if (map_config.audit_chat == 1 && map_config.audit_linkshell == 1)
                     {
                         std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");

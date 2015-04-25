@@ -422,6 +422,7 @@
     <ClInclude Include="..\..\src\map\utils\zoneutils.h" />
     <ClInclude Include="..\..\src\map\vana_time.h" />
     <ClInclude Include="..\..\src\map\weapon_skill.h" />
+    <ClInclude Include="..\..\src\map\web.h" />
     <ClInclude Include="..\..\src\map\zone.h" />
     <ClInclude Include="..\..\src\map\attack.h" />
     <ClInclude Include="..\..\src\map\attackround.h" />
@@ -656,6 +657,7 @@
     <ClCompile Include="..\..\src\map\utils\zoneutils.cpp" />
     <ClCompile Include="..\..\src\map\vana_time.cpp" />
     <ClCompile Include="..\..\src\map\weapon_skill.cpp" />
+    <ClCompile Include="..\..\src\map\web.cpp" />
     <ClCompile Include="..\..\src\map\zone.cpp" />
     <ClCompile Include="..\..\src\map\attack.cpp" />
     <ClCompile Include="..\..\src\map\attackround.cpp" />

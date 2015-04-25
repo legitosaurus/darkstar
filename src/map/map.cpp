@@ -68,6 +68,7 @@ This file is part of DarkStar-server source code.
 #include "packets/basic.h"
 #include "packets/char_update.h"
 #include "message.h"
+#include "web.h"
 
 
 const int8* MAP_CONF_FILENAME = nullptr;
@@ -86,11 +87,15 @@ uint32 map_amntplayers = 0;             // map amnt unique players
 in_addr map_ip;
 uint16 map_port = 0;
 
+in_addr node_ip;
+uint16 node_port = 0;
+
 map_config_t map_config;                // map server settings
 map_session_list_t map_session_list;
 CCommandHandler CmdHandler;
 
 std::thread messageThread;
+std::thread webThread;
 
 /************************************************************************
 *                                                                       *
@@ -145,7 +150,8 @@ map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
 int32 do_init(int32 argc, int8** argv)
 {
     ShowStatus("do_init: begin server initialization...\n");
-    map_ip.s_addr = 0;
+	map_ip.s_addr = 0;
+	node_ip.s_addr = 0;
 
     for (int i = 1; i < argc; i++)
     {
@@ -191,7 +197,8 @@ int32 do_init(int32 argc, int8** argv)
     zlib_init();
     ShowMessage("\t\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
 
-    messageThread = std::thread(message::init, map_config.msg_server_ip, map_config.msg_server_port);
+	messageThread = std::thread(message::init, map_config.msg_server_ip, map_config.msg_server_port);
+	webThread = std::thread(web::init, map_config.node_server_ip, map_config.node_server_port);
 
     ShowStatus("do_init: loading items");
     itemutils::Initialize();
@@ -273,6 +280,10 @@ void do_final(int code)
     {
         messageThread.join();
     }
+	if (webThread.joinable())
+	{
+		webThread.join();
+	}
 
     delete CTaskMgr::getInstance();
     delete CVanaTime::getInstance();
@@ -974,8 +985,12 @@ int32 map_config_default()
     map_config.audit_yell = 0;
     map_config.audit_party = 0;
     map_config.audit_linkshell = 0;
-    map_config.msg_server_port = 54003;
-    map_config.msg_server_ip = "127.0.0.1";
+	map_config.msg_server_port = 54003;
+	map_config.msg_server_ip = "127.0.0.1";
+	map_config.node_server_port = 54220;
+	map_config.node_server_ip = "127.0.0.1";
+	map_config.node_app_port = 53230;
+	map_config.node_app_ip = "127.0.0.1";
     return 0;
 }
 
@@ -1261,6 +1276,24 @@ int32 map_config_read(const int8* cfgName)
         {
             map_config.msg_server_ip = aStrdup(w2);
         }
+
+		// Added for nodejs support
+		else if (strcmp(w1, "node_server_port") == 0)
+		{
+			map_config.node_server_port = atoi(w2);
+		}
+		else if (strcmp(w1, "node_server_ip") == 0)
+		{
+			map_config.node_server_ip = aStrdup(w2);
+		}
+		else if (strcmp(w1, "node_app_port") == 0)
+		{
+			map_config.node_app_port = atoi(w2);
+		}
+		else if (strcmp(w1, "node_app_ip") == 0)
+		{
+			map_config.node_app_ip = aStrdup(w2);
+		}
         else
         {
             ShowWarning(CL_YELLOW"Unknown setting '%s' in file %s\n" CL_RESET, w1, cfgName);
