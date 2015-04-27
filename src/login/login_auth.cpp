@@ -108,6 +108,7 @@ int32 login_parse(int32 fd)
 		{
 		case LOGIN_ATTEMPT:
 			{
+			ShowWarning(CL_WHITE"login password" CL_RESET":" CL_WHITE"%s\n", password);
 			const int8* fmtQuery = "SELECT accounts.id,accounts.status \
 									FROM accounts \
 									WHERE accounts.login = '%s' AND accounts.password = PASSWORD('%s')";

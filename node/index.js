@@ -27,17 +27,17 @@ $r.bind($r.port, function(err) {
     });
 });
 
-// //dealer = client
-// var $d = zmq.socket('dealer');
-// $d.identity = 'client' + process.pid;
-// $d.connect('tcp://'+config.node.ip+':'+config.node.nodePort);
-// console.log('connected!');
-// setInterval(function() {
-// //var value = Math.floor(Math.random()*100
-//  var value = Math.floor(Math.random()*100);
-// $d.send(value);
-// console.log($d.identity + ': asking ' + value);
-// }, 100);
-// $d.on('message', function(data) {
-// console.log($d.identity + ': received ' + data.toString());
-// });
+//dealer = client
+var $d = zmq.socket('dealer');
+$d.identity = 'client' + process.pid;
+$d.connect('tcp://'+config.node.ip+':'+config.node.zmqPort);
+console.log('connected!');
+setInterval(function() {
+//var value = Math.floor(Math.random()*100
+ var value = Math.floor(Math.random()*100);
+$d.send(value);
+console.log($d.identity + ': asking ' + value);
+}, 100);
+$d.on('message', function(data) {
+console.log($d.identity + ': received ' + data.toString());
+});

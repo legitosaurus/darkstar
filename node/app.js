@@ -30,6 +30,19 @@ app.db.on('error', console.error.bind(console, 'mongoose connection error: '));
 app.db.once('open', function () {
   //and... we have a data store
 });
+var mysql      = require('mysql');
+app.sql = mysql.createConnection({
+  host     : '127.0.0.1',
+  user     : 'nodejs',
+  password : 'drunkg04ts'
+});
+
+app.sql.connect(function(err){
+   if (err) {
+    console.error('error connecting: ' + err.stack);
+    console.dir(err);
+  }
+});
 
 //config data models
 require('./models')(app, mongoose);
@@ -41,7 +54,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //middleware
-app.use(require('morgan')('dev'));
 app.use(require('compression')());
 app.use(require('serve-static')(path.join(__dirname, 'public')));
 app.use(require('method-override')());
@@ -58,13 +70,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(csrf({ cookie: { signed: true } }));
 helmet(app);
+app.use(require('morgan')('dev'));
 
 //response locals
 app.use(function(req, res, next) {
   res.cookie('_csrfToken', req.csrfToken());
   res.locals.user = {};
-  res.locals.user.defaultReturnUrl = req.user && req.user.defaultReturnUrl();
-  res.locals.user.username = req.user && req.user.username;
+  res.locals.user.defaultReturnUrl = '/';
+  res.locals.user.username = req.user && req.user.login;
+  res.locals.user.login = req.user && req.user.login;
   next();
 });
 
@@ -89,37 +103,12 @@ app.utility.sendmail = require('./util/sendmail');
 app.utility.slugify = require('./util/slugify');
 app.utility.workflow = require('./util/workflow');
 
-
-var zmq = require('zmq'),
-    nodeConfig = require('../conf/node_conf');
-var $r = zmq.socket('router');
-    $r.port = 'tcp://'+nodeConfig.node.ip+':'+nodeConfig.node.nodePort;
-    $r.identity = 'nodeServer'; // + process.pid;
-
-$r.bind($r.port, function(err) {
-    if (err) throw err;
-    console.log('Listening on: '+$r.port);
-
-    // setInterval(function() {
-    //   var value = Math.floor(Math.random()*100);
-
-    //   console.log($r.identity + ': asking ' + value);
-    //   $r.send(value);
-    // }, 100);
+app.nodeConfig = require('../conf/node_conf');
 
 
-    $r.on('message', function(envelope, data) {
-      console.dir(data);
-      var recvData = JSON.parse(data.toString());
-      console.dir(recvData);
-      app.io.emit('ls:msg', recvData);
-      //console.log($r.identity + ': received ' + envelope + ' - ' + data.toString());
-    });
-});
-app.io.on('connection', function(socket){
-  console.log('a user connected');
-});
 
+app.xi = require('./xi');
+app.xi.init(app);
 
 
 //listen up

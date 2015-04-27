@@ -191,7 +191,7 @@ const char* get_git_revision(void)
 
 static void display_title(void)
 {
-	ShowInfo("DarkStar - Git Revision Hash: " CL_WHITE"%s" CL_RESET".\n", get_git_revision());
+	ShowInfo("Brainforest - Git Revision Hash: " CL_WHITE"%s" CL_RESET".\n", get_git_revision());
 }
 
 /************************************************************************

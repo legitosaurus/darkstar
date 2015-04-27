@@ -248,8 +248,8 @@ namespace web
         uint64 ipp = node_ip.s_addr;
         uint64 port = node_port;
 		string_t myIdent;
-		ShowWarning("web::init webIp: %d\n", webIp);
-		ShowWarning("web::init webPort: %d\n", webPort);
+		//ShowWarning("web::init webIp: %d\n", webIp);
+		//ShowWarning("web::init webPort: %d\n", webPort);
 		if (node_ip.s_addr == 0 && node_port == 0)
 		{
 			myIdent = "mapServer";
@@ -287,6 +287,31 @@ namespace web
         }
         zContext.close();
     }
+	void web_server_send(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet)
+	{
+		try
+		{
+			zmq::message_t to(sizeof(uint64));
+			memcpy(to.data(), &ipp, sizeof(uint64));
+			zSocket->send(to, ZMQ_SNDMORE);
+
+			zmq::message_t newType(sizeof(MSGSERVTYPE));
+			WBUFB(newType.data(), 0) = type;
+			zSocket->send(newType, ZMQ_SNDMORE);
+
+			zmq::message_t newExtra(extra->size());
+			memcpy(newExtra.data(), extra->data(), extra->size());
+			zSocket->send(newExtra, ZMQ_SNDMORE);
+
+			zmq::message_t newPacket(packet->size());
+			memcpy(newPacket.data(), packet->data(), packet->size());
+			zSocket->send(newPacket);
+		}
+		catch (zmq::error_t e)
+		{
+			ShowError("Message: %s", e.what());
+		}
+	}
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
         std::lock_guard<std::mutex> lk(send_mutex);

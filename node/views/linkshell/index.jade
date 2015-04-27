@@ -1,0 +1,22 @@
+extends ../../layouts/default
+
+block head
+  title Linkshell
+
+block neck
+  link(rel='stylesheet', href='/css/linkshell.css?#{cacheBreaker}')
+
+block body
+  div.container
+    div.row(ng-controller='linkshellController')
+      div.col-sm-8
+        div.page-header
+          h1 Linkshell Messages
+        div.row
+          ul.lsMessages
+            li.lsMsg(ng-repeat='lsMsg in lsMessages')
+              span {{lsMsg}}
+      div.col-sm-4.special
+        div.page-header
+          h1 Users
+        i.fa.fa-gears.super-awesome

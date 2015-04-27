@@ -69,6 +69,7 @@ This file is part of DarkStar-server source code.
 #include "packets/char_update.h"
 #include "message.h"
 #include "web.h"
+#include "node.h"
 
 
 const int8* MAP_CONF_FILENAME = nullptr;
@@ -96,6 +97,7 @@ CCommandHandler CmdHandler;
 
 std::thread messageThread;
 std::thread webThread;
+std::thread nodeThread;
 
 /************************************************************************
 *                                                                       *
@@ -199,6 +201,7 @@ int32 do_init(int32 argc, int8** argv)
 
 	messageThread = std::thread(message::init, map_config.msg_server_ip, map_config.msg_server_port);
 	webThread = std::thread(web::init, map_config.node_server_ip, map_config.node_server_port);
+	nodeThread = std::thread(node::init, map_config.node_server_ip, map_config.node_server_port);
 
     ShowStatus("do_init: loading items");
     itemutils::Initialize();
@@ -283,6 +286,10 @@ void do_final(int code)
 	if (webThread.joinable())
 	{
 		webThread.join();
+	}
+	if (nodeThread.joinable())
+	{
+		nodeThread.join();
 	}
 
     delete CTaskMgr::getInstance();

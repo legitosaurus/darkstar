@@ -3541,7 +3541,7 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 			writer.String("type");
 			writer.String("chat");
 			writer.String("payload");
-			writer.StartArray();
+			writer.StartObject();
 			writer.String("char");
 			writer.String(PChar->GetName());
 			writer.String("body");
@@ -3560,6 +3560,11 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     const char * cC = qStr.c_str();
                     Sql_QueryStr(SqlHandle, cC);
                 }
+				writer.String("type");
+				writer.String("say");
+				writer.EndObject();
+				writer.EndObject();
+				web::sendJSON(s);
                 PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, data[6]));
             }
             break;
@@ -3576,6 +3581,11 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     const char * cC = qStr.c_str();
                     Sql_QueryStr(SqlHandle, cC);
                 }
+				writer.String("type");
+				writer.String("say");
+				writer.EndObject();
+				writer.EndObject();
+				web::sendJSON(s);
                 PChar->loc.zone->PushPacket(PChar, CHAR_INSHOUT, new CChatMessagePacket(PChar, MESSAGE_SHOUT, data[6]));
             }
             break;
@@ -3589,7 +3599,7 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     message::send(MSG_CHAT_LINKSHELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, data[6]));
 					writer.String("type");
 					writer.String("linkshell");
-					writer.EndArray();
+					writer.EndObject();
 					writer.EndObject();
 					web::sendJSON(s);
                     if (map_config.audit_chat == 1 && map_config.audit_linkshell == 1)
@@ -3657,6 +3667,11 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     {
                         PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
                         // ShowDebug(CL_CYAN" LastYell: %u \n" CL_RESET, PChar->m_LastYell);
+						writer.String("type");
+						writer.String("yell");
+						writer.EndObject();
+						writer.EndObject();
+						web::sendJSON(s);
                         message::send(MSG_CHAT_YELL, nullptr, 0, new CChatMessagePacket(PChar, MESSAGE_YELL, data[6]));
                     }
                     else // You must wait longer to perform that action.

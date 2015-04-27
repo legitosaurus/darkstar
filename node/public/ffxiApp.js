@@ -9,7 +9,7 @@ ffxiApp.service('$global', ['$rootScope', '$wSock', function($rootScope, $wSock)
     var self = this;
     $wSock.on('ls:msg', function(data){
     	console.log('linkshell message.');
-    	console.dir(data);
+    	$rootScope.$broadcast('ls:msg', data);
     })
     // this.items = {
     //     list: [

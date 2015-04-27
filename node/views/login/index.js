@@ -1,15 +1,11 @@
 'use strict';
 
 var getReturnUrl = function(req) {
-  var returnUrl = req.user.defaultReturnUrl();
-  if (req.session.returnUrl) {
-    returnUrl = req.session.returnUrl;
-    delete req.session.returnUrl;
-  }
-  return returnUrl;
+  return '/';
 };
 
 exports.init = function(req, res){
+  console.dir(req.user);
   if (req.isAuthenticated()) {
     res.redirect(getReturnUrl(req));
   }

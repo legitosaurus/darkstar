@@ -289,6 +289,7 @@
     <ClInclude Include="..\..\src\map\modifier.h" />
     <ClInclude Include="..\..\src\map\mob_modifier.h" />
     <ClInclude Include="..\..\src\map\navmesh.h" />
+    <ClInclude Include="..\..\src\map\node.h" />
     <ClInclude Include="..\..\src\map\packets\action.h" />
     <ClInclude Include="..\..\src\map\packets\auction_house.h" />
     <ClInclude Include="..\..\src\map\packets\basic.h" />
@@ -525,6 +526,7 @@
     <ClCompile Include="..\..\src\map\mob_spell_list.cpp" />
     <ClCompile Include="..\..\src\map\modifier.cpp" />
     <ClCompile Include="..\..\src\map\navmesh.cpp" />
+    <ClCompile Include="..\..\src\map\node.cpp" />
     <ClCompile Include="..\..\src\map\packets\action.cpp" />
     <ClCompile Include="..\..\src\map\packets\auction_house.cpp" />
     <ClCompile Include="..\..\src\map\packets\bazaar_confirmation.cpp" />

@@ -11,33 +11,28 @@ exports = module.exports = function(app, passport) {
   passport.use(new LocalStrategy(
     function(username, password, done) {
       var conditions = { isActive: 'yes' };
+      var database = 'debug_dspdb';
+      var testQuery = 'SELECT * FROM '+database+'.accounts WHERE ';
       if (username.indexOf('@') === -1) {
         conditions.username = username;
+        testQuery += 'login="'+username+'" AND';
       }
       else {
         conditions.email = username.toLowerCase();
+        testQuery += 'email="'+conditions.email+'" AND';
       }
-
-      app.db.models.User.findOne(conditions, function(err, user) {
-        if (err) {
+      testQuery +=' password=password("'+password+'")';
+      app.sql.query(testQuery, function(err, rows, fields) {
+        if (err){
+          console.log('error');
           return done(err);
         }
-
-        if (!user) {
+        else{
+          if(rows.length > 0){
+            return done(null, rows[0]);
+          }
           return done(null, false, { message: 'Unknown user' });
         }
-
-        app.db.models.User.validatePassword(password, user.password, function(err, isValid) {
-          if (err) {
-            return done(err);
-          }
-
-          if (!isValid) {
-            return done(null, false, { message: 'Invalid password' });
-          }
-
-          return done(null, user);
-        });
       });
     }
   ));
@@ -119,19 +114,20 @@ exports = module.exports = function(app, passport) {
   }
 
   passport.serializeUser(function(user, done) {
-    done(null, user._id);
+    done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
-    app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
-      if (user && user.roles && user.roles.admin) {
-        user.roles.admin.populate("groups", function(err, admin) {
-          done(err, user);
-        });
-      }
-      else {
-        done(err, user);
-      }
-    });
+    var database = 'debug_dspdb';
+    var testQuery = 'SELECT * FROM '+database+'.accounts WHERE id="'+id+'"';
+    app.sql.query(testQuery, function(err, rows, fields) {
+        if (err){
+          console.log('error');
+          return done(err, null);
+        }
+        else{
+          return done(err, rows[0]);
+        }
+      });
   });
 };

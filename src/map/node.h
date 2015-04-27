@@ -20,8 +20,8 @@ This file is part of DarkStar-server source code.
 
 ===========================================================================
 */
-#ifndef WEB_HEADER
-#define WEB_HEADER
+#ifndef NODE_HEADER
+#define NODE_HEADER
 
 #include "../common/socket.h"
 #include "../common/sql.h"
@@ -34,18 +34,19 @@ This file is part of DarkStar-server source code.
 
 class CBasicPacket;
 
-namespace web
+namespace node
 {
-	struct web_message_t
+	struct node_message_t
 	{
-		zmq::message_t* type;
+		uint64 dest;
+		MSGSERVTYPE type;
 		zmq::message_t* data;
 		zmq::message_t* packet;
 	};
-    void init(const char* webIp, uint16 webPort);
-	void sendJSON(rapidjson::StringBuffer& jsonBuffer);
-    void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet);
-    void close();
+	void node_send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet);
+	void node_close();
+	void init(const char* webIp, uint16 webPort);
+	void node_listen();
 	void queue_message(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet);
 };
 
